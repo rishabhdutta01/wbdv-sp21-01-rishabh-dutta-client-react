@@ -8,6 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import {Link} from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckIcon from "@material-ui/icons/Check";
+import {Input} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     courseCard: {
@@ -53,7 +54,7 @@ export default function CourseCard({deleteCourse, updateCourse, course}) {
                 }
                 {
                     editing &&
-                    <input className="form-control"
+                    <Input className="form-control"
                            value={newTitle}
                            onChange={
                                (event) => setNewTitle(event.target.value)
@@ -68,7 +69,7 @@ export default function CourseCard({deleteCourse, updateCourse, course}) {
                 }
                 {
                     editing &&
-                    <input className="form-control"
+                    <Input className="form-control"
                            value={newOwner}
                            onChange={
                                (event) => setNewOwner(event.target.value)

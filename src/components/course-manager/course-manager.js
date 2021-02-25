@@ -1,11 +1,11 @@
 import React from 'react'
 import {Route, Redirect} from "react-router-dom";
-import {createCourse, findAllCourses, deleteCourse, updateCourse} from "../services/course-service";
-import CustomAppBar from "./app-bar/app-bar";
-import CourseTable from "./course-table/course-table";
-import CourseGrid from "./course-grid/course-grid";
-import CourseEditor from "./course-editor/course-editor";
-import CustomBottomNavigation from "./bottom-navigation/bottom-navigation";
+import {createCourse, findAllCourses, deleteCourse, updateCourse} from "../../services/course-service";
+import CustomAppBar from "../app-bar/app-bar";
+import CourseTable from "../course-table/course-table";
+import CourseGrid from "../course-grid/course-grid";
+import CourseEditor from "../course-editor/course-editor";
+import CustomBottomNavigation from "../bottom-navigation/bottom-navigation";
 
 export default class CourseManager extends React.Component {
     state = {

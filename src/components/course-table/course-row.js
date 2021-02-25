@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import moment from "moment";
 import {useStyles} from "./course-table";
+import {Input} from "@material-ui/core";
 
 export default function CourseRow(
     {
@@ -50,7 +51,7 @@ export default function CourseRow(
                 }
                 {
                     editing &&
-                    <input
+                    <Input
                         onChange={(event) => setNewTitle(event.target.value)}
                         value={newTitle}
                         className="form-control"/>
@@ -63,7 +64,7 @@ export default function CourseRow(
                 }
                 {
                     editing &&
-                    <input
+                    <Input
                         onChange={(event) => setNewOwner(event.target.value)}
                         value={newOwner}
                         className="form-control"/>
