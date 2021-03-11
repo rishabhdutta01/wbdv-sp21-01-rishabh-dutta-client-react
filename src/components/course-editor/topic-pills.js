@@ -12,6 +12,7 @@ import List from "@material-ui/core/List";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        marginTop:"30px",
         display: "flex",
         flexDirection: "row",
         alignItems:"center",
@@ -19,8 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     wrapper: {
         display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         width: '100%',
         flexDirection: 'row',
     },
@@ -31,10 +30,18 @@ const useStyles = makeStyles((theme) => ({
     },
     items:{
         minWidth: "200px",
-        width:"200px"
+        width:"200px",
+        border: "1px solid black",
+        margin: "0px 0px 0px 10px",
+        borderRadius: "50px"
+    },
+    selected: {
+        '&.Mui-selected': {
+            backgroundColor: "lightBlue",
+            fontWeight: 600
+        }
     }
 }));
-
 
 const TopicPills = ({
                         topics = [],
@@ -46,13 +53,20 @@ const TopicPills = ({
                     }) => {
     const classes = useStyles();
 
+    // const [value, setValue] = React.useState(0);
+    //
+    // const handleChange = (event, newValue) => {
+    //     setValue(newValue);
+    // };
+
     const {layout, courseId, moduleId, lessonId, topicId} = useParams();
 
     useEffect(() => {
-        if (lessonId !== "undefined" && typeof lessonId !== "undefined") {
+        if (lessonId != "undefined" && typeof lessonId != "undefined" &&
+            moduleId != "undefined" && typeof moduleId != "undefined" ) {
             findTopicsForLesson(lessonId)
         } else {
-            setTopicsToEmpty(moduleId)
+            setTopicsToEmpty(lessonId)
         }
     }, [lessonId, moduleId, courseId])
 
@@ -64,12 +78,12 @@ const TopicPills = ({
                         topics.map(topic => (
                             <ListItem className={classes.items} key={topic["_id"]}
                                       id={topic["_id"]}
-                                      selected={topic._id === topicId}>
+                                      selected={topic._id === topicId}
+                                      classes={{ selected: classes.selected }}>
                                 <EditableItem
                                     to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}
                                     updateItem={updateTopic}
                                     deleteItem={deleteTopic}
-                                    active={true}
                                     item={topic}/>
                             </ListItem>
                         ))
@@ -87,12 +101,12 @@ const TopicPills = ({
                 </AddCircleIcon>
             </div>
         </AppBar>
-        // <div className={"row display-flex"}>
+        // <div className={"row display-flex mt-4"}>
         //     <div className={"col col-11"}>
         //         <AppBar position="static" color="default">
         //             <Tabs
-        //                 // value={value}
-        //                 // onChange={handleChange}
+        //                 value={value}
+        //                 onChange={handleChange}
         //                 variant="scrollable"
         //                 scrollButtons="on"
         //                 indicatorColor="primary"
@@ -100,17 +114,21 @@ const TopicPills = ({
         //
         //                 aria-label="scrollable force tabs example">
         //                 {
-        //                     lessons.map(lesson => (
-        //                         <Tab classes={{wrapper: classes.wrapper}} label={
-        //                             <>
-        //                                 <EditableItem
-        //                                     to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
-        //                                     updateItem={updateLesson}
-        //                                     deleteItem={deleteLesson}
-        //                                     active={true}
-        //                                     item={lesson}/>
-        //                             </>
-        //                         } />
+        //                     topics.map(topic => (
+        //                         <Tab classes={{wrapper: classes.wrapper}}
+        //                              selected={topic._id === topicId}
+        //                              className={classes.items}
+        //                              key={topic._id}
+        //                              id={topic._id}
+        //                              label={
+        //                                  <>
+        //                                      <EditableItem
+        //                                          to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}
+        //                                          updateItem={updateTopic}
+        //                                          deleteItem={deleteTopic}
+        //                                          item={topic}/>
+        //                                  </>
+        //                              } />
         //                     ))
         //                 }
         //             </Tabs>
@@ -123,35 +141,9 @@ const TopicPills = ({
         //             onClick={() =>
         //                 render(<TitleDialog openedByButton={true}
         //                                     parentID={moduleId}
-        //                                     createItem={createLesson}/>)}>
+        //                                     createItem={createTopic}/>)}>
         //         </AddCircleIcon>
         //     </div>
-        //     {/*{Array(10)*/}
-        //     {/*    .fill()*/}
-        //     {/*    .map((_, i) => (*/}
-        //     {/*        <TabPanel value={value} index={i}>*/}
-        //     {/*            Item {i + 1}*/}
-        //     {/*        </TabPanel>*/}
-        //     {/*    ))}*/}
-        // </div>
-        // <div className="p-3 bg-dark text-white">
-        //     <ul className="nav nav-tabs bg-light">
-        //         {
-        //             lessons.map(lesson =>
-        //                 <li className="nav-item active" key={`${lesson._id}`}>
-        //                     <EditableItem
-        //                         to={`/courses/${layout}/editor/${courseId}/${moduleId}/${lesson._id}`}
-        //                         deleteItem={deleteLesson}
-        //                         updateItem={updateLesson}
-        //                         item={lesson}
-        //                         active={lesson._id === lessonId}/>
-        //                 </li>
-        //             )
-        //         }
-        //         <li>
-        //             <i onClick={() => createLesson(moduleId)} className="fas fa-plus-circle fa-2x text-danger"></i>
-        //         </li>
-        //     </ul>
         // </div>
     )
 }
@@ -174,7 +166,7 @@ const dtpm = (dispatch) => {
 
         createTopic: (lessonId, title) => {
             if (!(lessonId !== "undefined" && typeof lessonId !== "undefined")) {
-                alert("Please select the module first to add the lesson to")
+                alert("Please select the lesson first to add the topic to")
             } else {
                 TopicService.createTopic(lessonId, {title: title})
                     .then(createdTopic => dispatch({

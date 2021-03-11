@@ -3,8 +3,7 @@ import {connect} from "react-redux"
 import EditableItem from "../editable-item"
 import {useParams} from "react-router-dom"
 import LessonService from "../../services/lesson-service"
-import ModuleService from "../../services/module-service";
-import {AppBar, IconButton, makeStyles, Tab, Tabs, withStyles} from "@material-ui/core";
+import {AppBar, IconButton, makeStyles, Paper, Tab, Tabs, withStyles} from "@material-ui/core";
 import {render} from "@testing-library/react";
 import TitleDialog from "./title-dialog";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -20,8 +19,6 @@ const useStyles = makeStyles((theme) => ({
     },
     wrapper: {
         display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         width: '100%',
         flexDirection: 'row',
     },
@@ -32,10 +29,18 @@ const useStyles = makeStyles((theme) => ({
     },
     items:{
         minWidth: "200px",
-        width:"200px"
+        width:"200px",
+        border: "0px 1px 0px 1px solid black",
+        boxShadow: "2px 2px 1px black",
+        margin: "0px 0px 0px 10px"
+    },
+    selected: {
+        '&.Mui-selected': {
+            backgroundColor: "lightBlue",
+            fontWeight: 600
+        }
     }
 }));
-
 
 const LessonTabs = ({
                         lessons = [],
@@ -47,6 +52,12 @@ const LessonTabs = ({
                     }) => {
     const classes = useStyles();
 
+    // const [value, setValue] = React.useState(0);
+    //
+    // const handleChange = (event, newValue) => {
+    //     setValue(newValue);
+    // };
+
     const {layout, courseId, moduleId, lessonId} = useParams();
 
     useEffect(() => {
@@ -57,32 +68,27 @@ const LessonTabs = ({
         }
     }, [moduleId, courseId])
 
-    function a11yProps(index) {
-        return {
-            id: `scrollable-force-tab-${index}`,
-            'aria-controls': `scrollable-force-tabpanel-${index}`,
-        };
-    }
-
     return (
-        <AppBar className={classes.root} position="static" color={"default"}>
+        <AppBar className={classes.root} position="static" color={"default"} component={Paper}>
             <div className={"col col-11"}>
-            <List className={classes.flexContainer}>
-                {
-                    lessons.map(lesson => (
-                        <ListItem className={classes.items}  key={lesson["_id"]}
-                                  id={lesson["_id"]}
-                                  selected={lesson._id === lessonId}>
-                            <EditableItem
-                                to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
-                                updateItem={updateLesson}
-                                deleteItem={deleteLesson}
-                                active={true}
-                                item={lesson}/>
-                        </ListItem>
-                    ))
-                }
-            </List>
+                <List className={classes.flexContainer}>
+                    {
+                        lessons.map(lesson => (
+                            <ListItem className={classes.items}
+                                      button
+                                      key={lesson["_id"]}
+                                      id={lesson["_id"]}
+                                      selected={lesson._id === lessonId}
+                                      classes={{ selected: classes.selected }}>
+                                <EditableItem
+                                    to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
+                                    updateItem={updateLesson}
+                                    deleteItem={deleteLesson}
+                                    item={lesson}/>
+                            </ListItem>
+                        ))
+                    }
+                </List>
             </div>
             <div className={"col col-1"}>
                 <AddCircleIcon
@@ -95,27 +101,30 @@ const LessonTabs = ({
                 </AddCircleIcon>
             </div>
         </AppBar>
-        // <div className={"row display-flex"}>
+        // <div className={"row display-flex align-items-center"}>
         //     <div className={"col col-11"}>
         //         <AppBar position="static" color="default">
         //             <Tabs
-        //                 // value={value}
-        //                 // onChange={handleChange}
+        //                 value={value}
+        //                 onChange={handleChange}
         //                 variant="scrollable"
         //                 scrollButtons="on"
         //                 indicatorColor="primary"
         //                 textColor="primary"
-        //
         //                 aria-label="scrollable force tabs example">
         //                 {
         //                     lessons.map(lesson => (
-        //                         <Tab classes={{wrapper: classes.wrapper}} label={
+        //                         <Tab classes={{wrapper: classes.wrapper}}
+        //                              selected={lesson._id === lessonId}
+        //                              className={classes.items}
+        //                              key={lesson._id}
+        //                              id={lesson._id}
+        //                              label={
         //                             <>
         //                                 <EditableItem
         //                                     to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lesson._id}`}
         //                                     updateItem={updateLesson}
         //                                     deleteItem={deleteLesson}
-        //                                     active={true}
         //                                     item={lesson}/>
         //                             </>
         //                         } />
@@ -134,32 +143,6 @@ const LessonTabs = ({
         //                                     createItem={createLesson}/>)}>
         //         </AddCircleIcon>
         //     </div>
-        //     {/*{Array(10)*/}
-        //     {/*    .fill()*/}
-        //     {/*    .map((_, i) => (*/}
-        //     {/*        <TabPanel value={value} index={i}>*/}
-        //     {/*            Item {i + 1}*/}
-        //     {/*        </TabPanel>*/}
-        //     {/*    ))}*/}
-        // </div>
-        // <div className="p-3 bg-dark text-white">
-        //     <ul className="nav nav-tabs bg-light">
-        //         {
-        //             lessons.map(lesson =>
-        //                 <li className="nav-item active" key={`${lesson._id}`}>
-        //                     <EditableItem
-        //                         to={`/courses/${layout}/editor/${courseId}/${moduleId}/${lesson._id}`}
-        //                         deleteItem={deleteLesson}
-        //                         updateItem={updateLesson}
-        //                         item={lesson}
-        //                         active={lesson._id === lessonId}/>
-        //                 </li>
-        //             )
-        //         }
-        //         <li>
-        //             <i onClick={() => createLesson(moduleId)} className="fas fa-plus-circle fa-2x text-danger"></i>
-        //         </li>
-        //     </ul>
         // </div>
     )
 }

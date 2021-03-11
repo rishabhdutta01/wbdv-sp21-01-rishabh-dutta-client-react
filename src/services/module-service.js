@@ -35,7 +35,7 @@ const findModule = (moduleId) =>
     fetch(`${MODULES_URL}/${moduleId}`)
         .then(response => response.json())
 
-const moduleService = {
+const ModuleService = {
     createModule,
     findModulesForCourse,
     deleteModule,
@@ -43,4 +43,4 @@ const moduleService = {
     findModule
 }
 
-export default moduleService;
+export default ModuleService;

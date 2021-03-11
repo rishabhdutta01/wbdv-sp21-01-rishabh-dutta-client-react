@@ -5,15 +5,13 @@ import {useParams} from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import moduleService from "../../services/module-service";
+import ModuleService from "../../services/module-service";
 import {Divider} from "@material-ui/core";
 import TitleDialog from "./title-dialog";
 import {render} from "@testing-library/react";
 import {makeStyles} from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Drawer from "@material-ui/core/Drawer";
-
-const drawerWidth = 240;
 
 const useStyles = makeStyles({
     drawer: {
@@ -27,6 +25,12 @@ const useStyles = makeStyles({
     },
     drawerAddButton: {
         textAlign: "center"
+    },
+    selected: {
+        '&.Mui-selected': {
+            backgroundColor: "lightBlue",
+            fontWeight: 600
+        }
     }
 });
 
@@ -53,29 +57,34 @@ function ModuleList(
     }, [courseId])
 
     return (
-        <Drawer className={classes.drawer}
+        <Drawer id={"modulesDrawer"}
+                className={classes.drawer}
                 variant="permanent"
                 classes={{paper: classes.drawerPaper}}>
             <Toolbar/>
+
             <div className={classes.drawerContainer}>
-                <List>
+                <List id={"modulesList"}>
                     {
                         moduleList.map(module => (
-                            <ListItem key={module["_id"]}
+                            <ListItem button
+                                      key={module["_id"]}
                                       id={module["_id"]}
-                                      selected={module._id === moduleId}>
+                                      selected={module._id === moduleId}
+                                      classes={{ selected: classes.selected }}>
                                 <EditableItem
                                     to={`/courses/${layout}/edit/${courseId}/modules/${module._id}`}
                                     updateItem={updateModule}
                                     deleteItem={deleteModule}
-                                    active={true}
                                     item={module}/>
                             </ListItem>
                         ))
                     }
                 </List>
             </div>
+
             <Divider/>
+
             <div className={classes.drawerAddButton}>
                 <AddCircleIcon color={"error"}
                                fontSize={"large"}
@@ -98,7 +107,7 @@ const stpm = (state) => {
 const dtpm = (dispatch) => {
     return {
         createModule: (courseId, title) => {
-            moduleService.createModule(courseId, {title: title})
+            ModuleService.createModule(courseId, {title: title})
                 .then(createdModule => dispatch({
                     type: "CREATE_MODULE",
                     moduleToCreate: createdModule
@@ -106,21 +115,21 @@ const dtpm = (dispatch) => {
         },
 
         deleteModule: (module) =>
-            moduleService.deleteModule(module._id)
+            ModuleService.deleteModule(module._id)
                 .then(status => dispatch({
                     type: "DELETE_MODULE",
                     moduleToDelete: module
                 })),
 
         updateModule: (module) =>
-            moduleService.updateModule(module._id, module)
+            ModuleService.updateModule(module._id, module)
                 .then(status => dispatch({
                     type: "UPDATE_MODULE",
                     moduleToUpdate: module
                 })),
 
         findModulesForCourse: (courseId) => {
-            moduleService.findModulesForCourse(courseId)
+            ModuleService.findModulesForCourse(courseId)
                 .then(allModules => dispatch({
                     type: "FIND_MODULES_FOR_COURSE",
                     modules: allModules

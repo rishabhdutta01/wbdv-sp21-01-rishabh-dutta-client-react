@@ -9,7 +9,6 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     itemLink: {
         flexGrow: 1,
-        //display: 'flex',
     }
 }));
 
@@ -19,7 +18,6 @@ const EditableItem = (
         deleteItem,
         updateItem,
         item = {title: "Some Title", _id: "ABC"},
-        active
     }) => {
 
     const classes = useStyles();
@@ -60,9 +58,9 @@ const EditableItem = (
                 editing &&
                 <>
                     <Input className={classes.itemLink}
-                        onChange={(event) =>
-                            setNewTitle(event.target.value)}
-                        value={newTitle}/>
+                           onChange={(event) =>
+                               setNewTitle(event.target.value)}
+                           value={newTitle}/>
 
                     <CheckIcon onClick={() => saveItem()}
                                className={"ml-2"}>
