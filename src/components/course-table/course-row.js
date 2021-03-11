@@ -44,7 +44,7 @@ export default function CourseRow(
             <TableCell width={"60%"} component={"th"} scope={"row"}>
                 {
                     !editing &&
-                    <Link to={`/courses/edit/${course["_id"]}`}>
+                    <Link to={`/courses/table/edit/${course["_id"]}`}>
                         {course.title}
                     </Link>
 

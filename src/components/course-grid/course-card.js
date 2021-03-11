@@ -48,7 +48,7 @@ export default function CourseCard({deleteCourse, updateCourse, course}) {
             <CardContent className={"pb-0"}>
                 {
                     !editing &&
-                    <Link to={`/courses/edit/${course["_id"]}`}>
+                    <Link to={`/courses/grid/edit/${course["_id"]}`}>
                         {course.title}
                     </Link>
                 }
@@ -77,7 +77,7 @@ export default function CourseCard({deleteCourse, updateCourse, course}) {
                 }
             </CardContent>
             <CardContent className={"pb-0"}>
-                <Link to={`/courses/edit/${course["_id"]}`}>
+                <Link to={`/courses/grid/edit/${course["_id"]}`}>
                     <Button variant="contained" color="primary">
                         {course.title}
                     </Button>

@@ -56,7 +56,8 @@ export default class CourseManager extends React.Component {
         return (
             <>
 
-                <Route path="/courses/table">
+                <Route exact={true}
+                       path="/courses/table">
                     <CustomAppBar addCourse={this.addCourse}/>
                     <CourseTable
                         addCourse={this.addCourse}
@@ -66,15 +67,18 @@ export default class CourseManager extends React.Component {
                     <CustomBottomNavigation addCourse={this.addCourse}/>
                 </Route>
 
-                <Route exact path="/courses">
+                <Route exact={true}
+                       path="/courses">
                     <Redirect to="/courses/table"/>}
                 </Route>
 
-                <Route exact path="/courses/edit/">
+                <Route exact={true}
+                       path="/courses/edit/">
                     <Redirect to="/courses/table"/>}
                 </Route>
 
-                <Route path="/courses/grid">
+                <Route exact={true}
+                       path="/courses/grid">
                     <CustomAppBar addCourse={this.addCourse}/>
                     <CourseGrid
                         addCourse={this.addCourse}
@@ -84,7 +88,14 @@ export default class CourseManager extends React.Component {
                     <CustomBottomNavigation addCourse={this.addCourse}/>
                 </Route>
 
-                <Route path="/courses/edit/:courseId" exact component={CourseEditor}/>
+                <Route exact={true}
+                       path={[
+                           "/courses/:layout/edit/:courseId",
+                           "/courses/:layout/edit/:courseId/modules/:moduleId",
+                           "/courses/:layout/edit/:courseId/modules/:moduleId/lessons/:lessonId",
+                           "/courses/:layout/edit/:courseId/modules/:moduleId/lessons/:lessonId/topics/:topicId"
+                       ]}
+                       render={(props) => <CourseEditor {...props}/>}/>
             </>
         )
     }
