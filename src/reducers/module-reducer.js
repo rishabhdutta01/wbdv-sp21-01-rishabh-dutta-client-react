@@ -1,16 +1,18 @@
+import ModuleActions from "../actions/module-actions";
+
 const initialState = {
     modules: []
 }
 
 const ModuleReducer = (state=initialState, action) => {
     switch (action.type) {
-        case "FIND_MODULES_FOR_COURSE":
+        case ModuleActions.FIND_MODULES_FOR_COURSE:
             return {
                 ...state,
                 modules: action.modules
             }
 
-        case "CREATE_MODULE":
+        case ModuleActions.CREATE_MODULE:
             const newState1 = {
                 modules: [
                     ...state.modules,
@@ -19,7 +21,7 @@ const ModuleReducer = (state=initialState, action) => {
             }
             return newState1
 
-        case "DELETE_MODULE":
+        case ModuleActions.DELETE_MODULE:
             const newState2 = {
                 modules: state.modules.filter(m => {
                     if(m._id === action.moduleToDelete._id) {
@@ -31,7 +33,7 @@ const ModuleReducer = (state=initialState, action) => {
             }
             return newState2
 
-        case "UPDATE_MODULE":
+        case ModuleActions.UPDATE_MODULE:
             const newState3 = {
                 modules: state.modules.map(m => {
                     if(m._id === action.moduleToUpdate._id) {
@@ -43,7 +45,7 @@ const ModuleReducer = (state=initialState, action) => {
             }
             return newState3
 
-        case "CLEAN_MODULES":
+        case ModuleActions.CLEAN_MODULES:
             return {
                 modules: []
             }

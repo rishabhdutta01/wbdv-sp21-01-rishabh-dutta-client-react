@@ -5,13 +5,13 @@ import {useParams} from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import ModuleService from "../../services/module-service";
 import {Divider} from "@material-ui/core";
 import TitleDialog from "./title-dialog";
 import {render} from "@testing-library/react";
 import {makeStyles} from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Drawer from "@material-ui/core/Drawer";
+import ModuleActions from "../../actions/module-actions";
 
 const useStyles = makeStyles({
     drawer: {
@@ -106,41 +106,15 @@ const stpm = (state) => {
 
 const dtpm = (dispatch) => {
     return {
-        createModule: (courseId, title) => {
-            ModuleService.createModule(courseId, {title: title})
-                .then(createdModule => dispatch({
-                    type: "CREATE_MODULE",
-                    moduleToCreate: createdModule
-                }))
-        },
+        createModule: (courseId, title) => ModuleActions.createModule(dispatch, courseId, title),
 
-        deleteModule: (module) =>
-            ModuleService.deleteModule(module._id)
-                .then(status => dispatch({
-                    type: "DELETE_MODULE",
-                    moduleToDelete: module
-                })),
+        deleteModule: (module) => ModuleActions.deleteModule(dispatch, module),
 
-        updateModule: (module) =>
-            ModuleService.updateModule(module._id, module)
-                .then(status => dispatch({
-                    type: "UPDATE_MODULE",
-                    moduleToUpdate: module
-                })),
+        updateModule: (module) => ModuleActions.updateModule(dispatch, module),
 
-        findModulesForCourse: (courseId) => {
-            ModuleService.findModulesForCourse(courseId)
-                .then(allModules => dispatch({
-                    type: "FIND_MODULES_FOR_COURSE",
-                    modules: allModules
-                }))
-        },
+        findModulesForCourse: (courseId) => ModuleActions.findModulesForCourse(dispatch, courseId),
 
-        setModulesToEmpty: () => {
-            dispatch({
-                type: "CLEAN_MODULES"
-            })
-        }
+        setModulesToEmpty: () => ModuleActions.cleanModules(dispatch)
     }
 }
 

@@ -9,13 +9,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {IconButton} from "@material-ui/core";
-import ModuleReducer from "../../reducers/modules-reducer";
-import LessonReducer from "../../reducers/lessons-reducer";
+import ModuleReducer from "../../reducers/module-reducer";
+import LessonReducer from "../../reducers/lesson-reducer";
 import TopicReducer from "../../reducers/topic-reducer";
+import WidgetReducer from "../../reducers/widget-reducer";
 import {Provider} from "react-redux";
 import LessonTabs from "./lesson-tabs";
 import TopicPills from "./topic-pills";
 import Drawer from "@material-ui/core/Drawer";
+import WidgetList from "../widgets/widget-list";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
 const reducer = combineReducers({
     moduleReducer: ModuleReducer,
     lessonReducer: LessonReducer,
-    topicReducer: TopicReducer
+    topicReducer: TopicReducer,
+    widgetReducer: WidgetReducer
 })
 
 const store = createStore(reducer)
@@ -76,7 +79,9 @@ export default function CourseEditor() {
                     <Toolbar/>
                     <LessonTabs/>
                     <TopicPills/>
+                    <WidgetList/>
                 </div>
+
             </div>
         </Provider>
     );

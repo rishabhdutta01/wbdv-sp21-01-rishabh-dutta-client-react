@@ -2,13 +2,13 @@ import React, {useEffect} from 'react'
 import {connect} from "react-redux"
 import EditableItem from "../editable-item"
 import {useParams} from "react-router-dom"
-import LessonService from "../../services/lesson-service"
 import {AppBar, IconButton, makeStyles, Paper, Tab, Tabs, withStyles} from "@material-ui/core";
 import {render} from "@testing-library/react";
 import TitleDialog from "./title-dialog";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
+import LessonActions from "../../actions/lesson-actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -155,50 +155,15 @@ const stpm = (state) => (
 
 const dtpm = (dispatch) => {
     return {
-        findLessonsForModule: (moduleId) => {
-            LessonService.findLessonsForModule(moduleId)
-                .then(allLessons => dispatch({
-                    type: "FIND_LESSONS_FOR_MODULE",
-                    lessons: allLessons
-                }))
-        },
+        findLessonsForModule: (moduleId) => LessonActions.findLessonsForModule(dispatch, moduleId),
 
-        createLesson: (moduleId, title) => {
-            if (!(moduleId !== "undefined" && typeof moduleId !== "undefined")) {
-                alert("Please select the module first to add the lesson to")
-            } else {
-                LessonService.createLesson(moduleId, {title: title})
-                    .then(createdLesson => dispatch({
-                        type: "CREATE_LESSON",
-                        lessonToCreate: createdLesson
-                    }))
-            }
-        },
+        createLesson: (moduleId, title) => LessonActions.createLesson(dispatch, moduleId, title),
 
-        deleteLesson: (lesson) => {
-            LessonService.deleteLesson(lesson._id)
-                .then(status => dispatch(
-                    {
-                        type: "DELETE_LESSON",
-                        lessonToDelete: lesson
-                    }
-                ))
-        },
+        deleteLesson: (lesson) => LessonActions.deleteLesson(dispatch, lesson),
 
-        updateLesson: (lesson) => {
-            LessonService.updateLesson(lesson._id, lesson)
-                .then(status => dispatch({
-                        type: "UPDATE_LESSON",
-                        lessonToUpdate: lesson
-                    })
-                )
-        },
+        updateLesson: (lesson) => LessonActions.updateLesson(dispatch, lesson),
 
-        setLessonsToEmpty: () => {
-            dispatch({
-                type: "CLEAN_LESSONS"
-            })
-        }
+        setLessonsToEmpty: () => LessonActions.cleanLessons(dispatch)
     }
 }
 

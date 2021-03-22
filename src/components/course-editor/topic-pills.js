@@ -2,17 +2,18 @@ import React, {useEffect} from 'react'
 import {connect} from "react-redux"
 import EditableItem from "../editable-item"
 import {useParams} from "react-router-dom"
-import TopicService from "../../services/topic-service";
 import {AppBar, IconButton, makeStyles, Tab, Tabs, withStyles} from "@material-ui/core";
 import {render} from "@testing-library/react";
 import TitleDialog from "./title-dialog";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
+import TopicActions from "../../actions/topic-actions";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop:"30px",
+        marginTop:"15px",
         display: "flex",
         flexDirection: "row",
         alignItems:"center",
@@ -62,8 +63,8 @@ const TopicPills = ({
     const {layout, courseId, moduleId, lessonId, topicId} = useParams();
 
     useEffect(() => {
-        if (lessonId != "undefined" && typeof lessonId != "undefined" &&
-            moduleId != "undefined" && typeof moduleId != "undefined" ) {
+        if (lessonId !== "undefined" && typeof lessonId != "undefined" &&
+            moduleId !== "undefined" && typeof moduleId != "undefined" ) {
             findTopicsForLesson(lessonId)
         } else {
             setTopicsToEmpty(lessonId)
@@ -71,7 +72,7 @@ const TopicPills = ({
     }, [lessonId, moduleId, courseId])
 
     return (
-        <AppBar className={classes.root} position="static" color={"default"}>
+        <AppBar className={classes.root} position="static" color={"default"} component={Paper}>
             <div className={"col col-11"}>
                 <List className={classes.flexContainer}>
                     {
@@ -156,50 +157,15 @@ const stpm = (state) => (
 
 const dtpm = (dispatch) => {
     return {
-        findTopicsForLesson: (lessonId) => {
-            TopicService.findTopicsForLesson(lessonId)
-                .then(allTopics => dispatch({
-                    type: "FIND_TOPICS_FOR_LESSON",
-                    topics: allTopics
-                }))
-        },
+        findTopicsForLesson: (lessonId) => TopicActions.findTopicsForLesson(dispatch, lessonId),
 
-        createTopic: (lessonId, title) => {
-            if (!(lessonId !== "undefined" && typeof lessonId !== "undefined")) {
-                alert("Please select the lesson first to add the topic to")
-            } else {
-                TopicService.createTopic(lessonId, {title: title})
-                    .then(createdTopic => dispatch({
-                        type: "CREATE_TOPIC",
-                        topicToCreate: createdTopic
-                    }))
-            }
-        },
+        createTopic: (lessonId, title) => TopicActions.createTopic(dispatch, lessonId, title),
 
-        deleteTopic: (topic) => {
-            TopicService.deleteTopic(topic._id)
-                .then(status => dispatch(
-                    {
-                        type: "DELETE_TOPIC",
-                        topicToDelete: topic
-                    }
-                ))
-        },
+        deleteTopic: (topic) => TopicActions.deleteTopic(dispatch, topic),
 
-        updateTopic: (topic) => {
-            TopicService.updateTopic(topic._id, topic)
-                .then(status => dispatch({
-                        type: "UPDATE_TOPIC",
-                        topicToUpdate: topic
-                    })
-                )
-        },
+        updateTopic: (topic) => TopicActions.updateTopic(dispatch, topic),
 
-        setTopicsToEmpty: () => {
-            dispatch({
-                type: "CLEAN_TOPICS"
-            })
-        }
+        setTopicsToEmpty: () => TopicActions.cleanTopics(dispatch)
     }
 }
 
