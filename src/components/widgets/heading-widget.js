@@ -76,6 +76,8 @@ const HeadingWidget = (
                                 }>
                             <MenuItem value={"HEADING"}>Heading</MenuItem>
                             <MenuItem value={"PARAGRAPH"}>Paragraph</MenuItem>
+                            <MenuItem value={"IMAGE"}>Image</MenuItem>
+                            <MenuItem value={"LIST"}>List</MenuItem>
                         </Select>
                     </FormControl>
 

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import EditableItem from "../editable-item";
+import EditableItem from "./editable-item";
 import {useParams} from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";

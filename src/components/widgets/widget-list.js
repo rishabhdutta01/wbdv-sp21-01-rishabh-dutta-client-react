@@ -9,6 +9,8 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ListItem from "@material-ui/core/ListItem";
 import HeadingWidget from "./heading-widget";
 import ParagraphWidget from "./paragraph-widget";
+import ImageWidget from "./image-widget";
+import ListWidget from "./list-widget";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -82,6 +84,22 @@ const WidgetList = ({
                         {
                             widget.type === "PARAGRAPH" &&
                             <ParagraphWidget
+                                to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lessonId}/topics/${topicId}/widgets/${widget.id}`}
+                                updateWidget={updateWidget}
+                                deleteWidget={deleteWidget}
+                                widget={widget}/>
+                        }
+                        {
+                            widget.type === "IMAGE" &&
+                            <ImageWidget
+                                to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lessonId}/topics/${topicId}/widgets/${widget.id}`}
+                                updateWidget={updateWidget}
+                                deleteWidget={deleteWidget}
+                                widget={widget}/>
+                        }
+                        {
+                            widget.type === "LIST" &&
+                            <ListWidget
                                 to={`/courses/${layout}/edit/${courseId}/modules/${moduleId}/lessons/${lessonId}/topics/${topicId}/widgets/${widget.id}`}
                                 updateWidget={updateWidget}
                                 deleteWidget={deleteWidget}

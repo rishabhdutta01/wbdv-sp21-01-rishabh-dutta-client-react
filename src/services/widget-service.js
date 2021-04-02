@@ -1,5 +1,7 @@
-const TOPICS_URL = "https://webdev-assignment1-rishabh.herokuapp.com/api/topics"
-const WIDGETS_URL = "https://webdev-assignment1-rishabh.herokuapp.com/api/widgets";
+const TOPICS_URL = "http://localhost:8080/api/topics"
+const WIDGETS_URL = "http://localhost:8080/api/widgets";
+//const TOPICS_URL = "https://webdev-assignment1-rishabh.herokuapp.com/api/topics"
+//const WIDGETS_URL = "https://webdev-assignment1-rishabh.herokuapp.com/api/widgets";
 
 const createWidget = (topicId, widget) =>
     fetch(`${TOPICS_URL}/${topicId}/widgets`, {

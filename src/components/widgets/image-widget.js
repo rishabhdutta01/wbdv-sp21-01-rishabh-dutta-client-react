@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import SettingsIcon from '@material-ui/icons/Settings';
-import {FormControl, InputLabel, makeStyles, MenuItem, Select} from "@material-ui/core";
+import React, {useState} from "react"
+import {FormControl, InputLabel, makeStyles, MenuItem, Select, TextField} from "@material-ui/core";
+import SettingsIcon from "@material-ui/icons/Settings";
 import CheckIcon from "@material-ui/icons/Check";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    // horizontalItems: {
+    //     display: "flex",
+    //     flexDirection: "row"
+    // },
     verticalItems: {
         display: "flex",
         flexGrow: 1,
@@ -19,12 +23,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ParagraphWidget = (
+const ImageWidget = (
     {
-        to = "/somewhere/to/go",
+        widget,
         updateWidget,
-        deleteWidget,
-        widget = {},
+        deleteWidget
     }
 ) => {
 
@@ -36,6 +39,7 @@ const ParagraphWidget = (
     const saveWidget = () => {
         setEditing(false)
         updateWidget(cachedWidget)
+
     }
 
     return (
@@ -43,9 +47,7 @@ const ParagraphWidget = (
             {!editing &&
             <>
                 <div className={classes.verticalItems}>
-                    <p>
-                        {widget.text}
-                    </p>
+                    <img width={widget.width} height={widget.height} src={widget.url}/>
                 </div>
 
                 <SettingsIcon onClick={() => setEditing(true)}
@@ -57,6 +59,33 @@ const ParagraphWidget = (
                 editing &&
                 <>
                     <div className={classes.verticalItems}>
+                        <TextField label={"Image URL"}
+                                   value={cachedWidget.url}
+                                   onChange={
+                                       (e) => setCachedWidget({
+                                           ...cachedWidget,
+                                           url: e.target.value
+                                       })
+                                   }/>
+
+                        <TextField label={"Image Width"}
+                                   value={cachedWidget.width}
+                                   onChange={
+                                       (e) => setCachedWidget({
+                                           ...cachedWidget,
+                                           width: e.target.value
+                                       })
+                                   }/>
+
+                        <TextField label={"Image Height"}
+                                   value={cachedWidget.height}
+                                   onChange={
+                                       (e) => setCachedWidget({
+                                           ...cachedWidget,
+                                           height: e.target.value
+                                       })
+                                   }/>
+
                         <FormControl className={classes.formControl}>
                             <InputLabel id="widgetType">Type</InputLabel>
                             <Select labelId="widgetType"
@@ -73,31 +102,19 @@ const ParagraphWidget = (
                                 <MenuItem value={"LIST"}>List</MenuItem>
                             </Select>
                         </FormControl>
-
-                        <textarea
-                            value={widget.text}
-                            onChange={
-                                (e) => setCachedWidget({
-                                    ...cachedWidget,
-                                    text: e.target.value
-                                })
-                            }
-                            value={cachedWidget.text} className="form-control"/>
                     </div>
 
                     <CheckIcon className="float-right"
-                               onClick={() => {
-                                   saveWidget()
-                               }}/>
+                               onClick={() => saveWidget()}/>
 
                     <DeleteIcon className="float-right"
                                 onClick={() => {
-                                    deleteWidget(widget)
+                                    deleteWidget(cachedWidget)
                                 }}/>
                 </>
             }
         </>
-    );
+    )
 }
 
-export default ParagraphWidget
+export default ImageWidget
