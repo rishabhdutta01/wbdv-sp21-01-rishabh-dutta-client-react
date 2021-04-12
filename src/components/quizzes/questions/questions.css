@@ -1,0 +1,18 @@
+.correct--class, .wrong--class{
+    position: relative;
+}
+.correct--class::before{
+    content : "\2713";
+    color : green;
+    position: absolute;
+    right : 10px;
+    top : 5px;
+}
+
+.wrong--class::before{
+    content : "\2715";
+    position: absolute;
+    color: red;
+    right : 10px;
+    top : 5px;
+}

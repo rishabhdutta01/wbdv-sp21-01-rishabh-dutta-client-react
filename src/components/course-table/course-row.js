@@ -8,6 +8,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import moment from "moment";
 import {useStyles} from "./course-table";
 import {Input} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 export default function CourseRow(
     {
@@ -44,9 +45,18 @@ export default function CourseRow(
             <TableCell width={"60%"} component={"th"} scope={"row"}>
                 {
                     !editing &&
+                        <>
                     <Link to={`/courses/table/edit/${course["_id"]}`}>
                         {course.title}
                     </Link>
+                    <Button component={Link}
+                            size={"small"}
+                            variant="contained"
+                            className="float-right"
+                            to={`/courses/${course["_id"]}/quizzes`}>
+                        Quizzes
+                    </Button>
+                        </>
 
                 }
                 {

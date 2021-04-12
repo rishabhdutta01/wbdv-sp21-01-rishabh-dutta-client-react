@@ -6,6 +6,8 @@ import CourseTable from "../course-table/course-table";
 import CourseGrid from "../course-grid/course-grid";
 import CourseEditor from "../course-editor/course-editor";
 import CustomBottomNavigation from "../bottom-navigation/bottom-navigation";
+import QuizzesList from "../quizzes/quizzes-list";
+import Quiz from "../quizzes/quiz";
 
 export default class CourseManager extends React.Component {
     state = {
@@ -97,6 +99,13 @@ export default class CourseManager extends React.Component {
                            "/courses/:layout/edit/:courseId/modules/:moduleId/lessons/:lessonId/topics/:topicId/widgets/:widgetId"
                        ]}
                        render={(props) => <CourseEditor {...props}/>}/>
+
+                <Route path="/courses/:courseId/quizzes" exact={true}>
+                    <QuizzesList/>
+                </Route>
+                <Route path="/courses/:courseId/quizzes/:quizId" exact={true}>
+                    <Quiz/>
+                </Route>
             </>
         )
     }
