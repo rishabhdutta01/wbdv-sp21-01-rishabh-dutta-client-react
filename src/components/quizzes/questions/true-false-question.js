@@ -14,22 +14,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const TrueFalseQuestion = ({question}) => {
+const TrueFalseQuestion = ({question, buttonClicked}) => {
 
     const classes = useStyles()
 
     const [value, setValue] = useState('')
     const [answerChosen, setAnswerChosen] = useState('')
-    const [buttonClicked, setButtonClicked] = useState(false)
 
     const handleRadioChange = (event) => {
+        question.answer = event.target.value
         setValue(event.target.value)
     };
 
     let trueHighlightClass = "", falseHighlightClass = "";
 
     const correctClass = `${classes.correct} correct--class`,
-            wrongClass = `${classes.wrong} wrong--class`;
+        wrongClass = `${classes.wrong} wrong--class`;
 
     if (buttonClicked) {
         if (question.correct == "true") {
@@ -86,16 +86,6 @@ const TrueFalseQuestion = ({question}) => {
                     value
                 }
             </Typography>
-
-
-            <Button disabled={buttonClicked}
-                    onClick={() => {
-                        setButtonClicked(true)
-                        setAnswerChosen(`${value} chosen`);
-                    }
-                    }>
-                Grade
-            </Button>
         </div>
     )
 }

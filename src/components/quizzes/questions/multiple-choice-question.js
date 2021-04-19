@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MultipleChoiceQuestion = ({question}) => {
+const MultipleChoiceQuestion = ({question, buttonClicked}) => {
     const classes = useStyles()
 
     const [value, setValue] = useState('')
     const [answerChosen, setAnswerChosen] = useState('')
-    const [buttonClicked, setButtonClicked] = useState(false)
 
     const handleRadioChange = (event) => {
+        question.answer = event.target.value
         setValue(event.target.value)
     };
 
@@ -83,17 +83,6 @@ const MultipleChoiceQuestion = ({question}) => {
                     value
                 }
             </Typography>
-
-
-            <Button disabled={buttonClicked}
-                    onClick={() => {
-                        setButtonClicked(true)
-                        setAnswerChosen(value);
-                        // setAnswerChosen(`${value} chosen`);
-                    }
-                    }>
-                Grade
-            </Button>
         </div>
     )
 }

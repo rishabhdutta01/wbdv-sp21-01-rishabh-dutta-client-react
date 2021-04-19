@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
-import QuizService from "../../services/quiz-service";
+import QuizzesService from "../../services/quizzes-service";
 
 const QuizzesList = () => {
 
@@ -10,7 +10,7 @@ const QuizzesList = () => {
 
     useEffect(() => {
         if (courseId !== "undefined" && typeof courseId != "undefined") {
-            QuizService.findAllQuizzes()
+            QuizzesService.findAllQuizzes()
                 .then((quizzes) => {
                     setQuizzes(quizzes)
                 })

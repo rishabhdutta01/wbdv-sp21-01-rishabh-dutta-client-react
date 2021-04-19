@@ -5,8 +5,8 @@ const findQuestionsForQuiz = (quizId) => {
         .then(response => response.json())
 }
 
-const  QuestionService = {
+const  QuestionsService = {
     findQuestionsForQuiz
 }
 
-export default QuestionService
+export default QuestionsService
