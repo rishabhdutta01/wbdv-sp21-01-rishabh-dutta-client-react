@@ -1,4 +1,5 @@
-const QUIZZES_URL = 'http://localhost:3001/api/quizzes'
+//const QUIZZES_URL = 'http://localhost:3001/api/quizzes'
+const QUIZZES_URL = 'http://wbdv-assignment-node-rishabh.herokuapp.com/api/quizzes'
 
 const findAllQuizzes = () => {
     return fetch(QUIZZES_URL)
