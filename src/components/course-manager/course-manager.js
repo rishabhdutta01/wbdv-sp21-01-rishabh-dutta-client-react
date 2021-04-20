@@ -8,6 +8,7 @@ import CourseEditor from "../course-editor/course-editor";
 import CustomBottomNavigation from "../bottom-navigation/bottom-navigation";
 import QuizzesList from "../quizzes/quizzes-list";
 import Quiz from "../quizzes/quiz";
+import QuizAttempts from "../quizzes/quiz-attempts";
 
 export default class CourseManager extends React.Component {
     state = {
@@ -105,6 +106,9 @@ export default class CourseManager extends React.Component {
                 </Route>
                 <Route path="/courses/:courseId/quizzes/:quizId" exact={true}>
                     <Quiz/>
+                </Route>
+                <Route path="/courses/:courseId/quizzes/:quizId/attempts" exact={true}>
+                    <QuizAttempts/>
                 </Route>
             </>
         )

@@ -21,8 +21,11 @@ const MultipleChoiceQuestion = ({question, buttonClicked}) => {
 
     const handleRadioChange = (event) => {
         question.answer = event.target.value
+        setAnswerChosen(event.target.value)
         setValue(event.target.value)
     };
+
+    let trueHighlightClass = "", falseHighlightClass = "";
 
     const correctClass = `${classes.correct} correct--class`,
         wrongClass = `${classes.wrong} wrong--class`;

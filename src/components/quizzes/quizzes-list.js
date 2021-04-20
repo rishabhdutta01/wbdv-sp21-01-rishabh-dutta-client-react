@@ -1,8 +1,17 @@
 import React, {useState, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import QuizzesService from "../../services/quizzes-service";
+import {makeStyles} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+    flexColumn: {
+        display: 'flex',
+    },
+}));
 
 const QuizzesList = () => {
+
+    const classes = useStyles()
 
     const {courseId} = useParams()
 
@@ -17,18 +26,25 @@ const QuizzesList = () => {
         }
     }, [courseId])
 
-    return(
+    return (
         <div>
             <h2>Quizzes</h2>
             <div className="list-group">
                 {
                     quizzes.map((quiz) => {
-                        return(
-                            <Link
-                                to={`/courses/${courseId}/quizzes/${quiz._id}`}
-                                className="list-group-item">
-                                {quiz.title}
-                            </Link>
+                        return (
+                            <div className={classes.flexColumn}>
+                                <Link
+                                    to={`/courses/${courseId}/quizzes/${quiz._id}`}
+                                    className="list-group-item">
+                                    {quiz.title}
+                                </Link>
+                                <Link
+                                    to={`/courses/${courseId}/quizzes/${quiz._id}/attempts`}
+                                    className="list-group-item">
+                                    Attempts History
+                                </Link>
+                            </div>
                         )
                     })
                 }

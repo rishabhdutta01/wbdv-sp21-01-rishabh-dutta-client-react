@@ -12,7 +12,7 @@ const findQuizById = (quizId) => {
 }
 
 const submitQuiz = (quizId, questions) => {
-    fetch(`http://localhost:3001/api/quizzes/${quizId}/attempts`, {
+    fetch(`${QUIZZES_URL}/${quizId}/attempts`, {
         method: 'POST',
         body: JSON.stringify(questions),
         headers: {
@@ -22,15 +22,20 @@ const submitQuiz = (quizId, questions) => {
 }
 
 const findLastQuizAttempt = (quizId) => {
-    return fetch(`http://localhost:3001/api/quizzes/${quizId}/attempts/last`)
+    return fetch(`${QUIZZES_URL}/${quizId}/attempts/last`)
         .then(response => response.json())
 }
+
+export const getQuizAttempts = (qid) =>
+    fetch(`${QUIZZES_URL}/${qid}/attempts`)
+        .then(response => response.json());
 
 const QuizzesService = {
     findAllQuizzes,
     findQuizById,
     submitQuiz,
-    findLastQuizAttempt
+    findLastQuizAttempt,
+    getQuizAttempts
 }
 
 export default QuizzesService
